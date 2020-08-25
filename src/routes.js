@@ -1,5 +1,8 @@
 const { Router } = require("express");
 const EmpController = require("./controllers/EmpController");
+const SearchAllController = require("./controllers/SearchAllController");
+const SearchNameController = require("./controllers/SearchNameController");
+
 const routes = Router();
 
 //Query params: request.query (filtros, ordenação, paginação...)
@@ -7,5 +10,9 @@ const routes = Router();
 //Body: request.body (dados para criação ou alteração de um registro)
 
 routes.post("/empresas", EmpController.gravarBD);
+routes.get("/empresas", EmpController.listarEmpresas);
+routes.get("/search-near", SearchAllController.filtroProximo);
+routes.get("/search", SearchNameController.filtroNome);
+// routes.get("/search", SearchController.filtroPreco);
 
 module.exports = routes;

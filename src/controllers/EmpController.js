@@ -1,6 +1,13 @@
 const Empresa = require("../models/Empresa");
 
 module.exports = {
+  //listarEmpresas == 'index' nos controllers
+  async listarEmpresas(req, resp) {
+    const Emps = await Empresa.find();
+    return resp.json(Emps);
+  },
+
+  //gravarBD == 'store' nos controllers
   async gravarBD(request, response) {
     const { empresa, email, endereco, latitude, longitude } = request.body;
 
