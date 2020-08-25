@@ -37,4 +37,10 @@ module.exports = {
       });
     }
   },
+
+  //editar = 'update' nos controllers
+  // async editar(req, resp) {},
+
+  //deletar = 'destroy' nos controllers
+  // async deletar(req, resp) {},
 };
