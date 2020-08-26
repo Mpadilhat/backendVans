@@ -7,7 +7,7 @@ module.exports = {
     //Todas as empresas num raio de 5km e filtro por nome
     const { latitude, longitude, empresa } = req.query;
 
-    const Emps = await Empresa.find({
+    const Emp = await Empresa.find({
       $and: [
         { empresa: { $eq: empresa } },
         {
@@ -24,6 +24,8 @@ module.exports = {
       ],
     });
 
-    return resp.json({ Emps });
+    if (Emp.length === 0) {
+      return resp.json({ message: "Empresa não encontrada" });
+    } else return resp.json(Emp);
   },
 };

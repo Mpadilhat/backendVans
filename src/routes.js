@@ -11,6 +11,10 @@ const routes = Router();
 
 routes.post("/empresas", EmpController.gravarBD);
 routes.get("/empresas", EmpController.listarEmpresas);
+routes.get("/empresas/:id", EmpController.listarPorId);
+//routes.put("/usuario/:id", EmpController.editar);
+//routes.delete("/usuario/:id", EmpController.deletar);
+
 routes.get("/search-near", SearchAllController.filtroProximo);
 routes.get("/search", SearchNameController.filtroNome);
 // routes.get("/search", SearchController.filtroPreco);

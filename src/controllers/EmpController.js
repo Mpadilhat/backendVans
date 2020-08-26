@@ -4,7 +4,19 @@ module.exports = {
   //listarEmpresas == 'index' nos controllers
   async listarEmpresas(req, resp) {
     const Emps = await Empresa.find();
-    return resp.json(Emps);
+
+    if (Emps.length === 0) {
+      return resp.json({ message: "Não existem empresas cadastradas" });
+    } else return resp.json(Emps);
+  },
+
+  async listarPorId(req, resp) {
+    const { id } = req.params;
+    await Empresa.findOne({ _id: id }, function (err, result) {
+      if (err) {
+        resp.json({ message: "Empresa não encontrada" });
+      } else resp.json(result);
+    });
   },
 
   //gravarBD == 'store' nos controllers
@@ -39,8 +51,8 @@ module.exports = {
   },
 
   //editar = 'update' nos controllers
-  // async editar(req, resp) {},
+  //async editar(req, resp) {}
 
   //deletar = 'destroy' nos controllers
-  // async deletar(req, resp) {},
+  //async deletar(req, resp) {},
 };
