@@ -21,7 +21,8 @@ module.exports = {
 
   //gravarBD == 'store' nos controllers
   async gravarBD(request, response) {
-    const { empresa, email, endereco, latitude, longitude } = request.body;
+    const { user, empresa, endereco, latitude, longitude } = request.body;
+    const email = user.email;
 
     //Verificar se já existe empresa cadastrada com aquele nome ou e-mail
     const empresaExiste = await Empresa.findOne({ empresa });
@@ -36,6 +37,7 @@ module.exports = {
 
       //Cadastra a empresa no Banco de Dados
       const emp = await Empresa.create({
+        user,
         empresa,
         email,
         endereco,
@@ -45,8 +47,37 @@ module.exports = {
       return response.json(emp);
     } else {
       return response.json({
-        message: "Esta empresa ou e-mail já está cadastrados",
+        message: "Esta empresa ou e-mail já estão cadastrados",
       });
+    }
+  },
+
+  //logar
+  async buscarUsuario(req, resp) {
+    const { email, senha } = req.body;
+
+    //Testa o email pq não vai poder repetir
+    const emailExist = await Empresa.find({
+      "user.email": email,
+    });
+
+    if (emailExist.length !== 0) {
+      await Empresa.find(
+        {
+          $and: [{ "user.email": email }, { "user.senha": senha }],
+        },
+        function (err, result) {
+          if (err) {
+            return resp.json({ message: "Erro ao buscar usuário" });
+          } else {
+            if (result.length === 0)
+              return resp.json({ message: "Senha incorreta!" });
+            else return resp.json(result);
+          }
+        }
+      );
+    } else {
+      return resp.json({ message: "Este usuário não existe" });
     }
   },
 
