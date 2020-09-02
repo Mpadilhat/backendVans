@@ -82,7 +82,24 @@ module.exports = {
   },
 
   //editar = 'update' nos controllers
-  //async editar(req, resp) {}
+  async editar(req, resp) {
+    const { id } = req.params;
+    const { empresa, email, endereco, latitude, longitude } = req.body;
+
+    await Empresa.updateOne(
+      { _id: id },
+      {
+        $set: { empresa, email, endereco, latitude, longitude },
+      },
+      function (err, result) {
+        if (err) {
+          resp.json({ message: "Erro ao atualizar o usuário!" });
+        } else {
+          resp.json({ message: "Usuário atualizado com sucesso!" });
+        }
+      }
+    );
+  },
 
   //deletar = 'destroy' nos controllers
   //async deletar(req, resp) {},

@@ -13,7 +13,7 @@ routes.post("/empresas", EmpController.gravarBD);
 routes.get("/empresas", EmpController.listarEmpresas);
 routes.get("/empresas/:id", EmpController.listarPorId);
 routes.post("/usuario", EmpController.buscarUsuario);
-//routes.put("/usuario/:id", EmpController.editar);
+routes.put("/usuario/:id", EmpController.editar);
 //routes.delete("/usuario/:id", EmpController.deletar);
 
 routes.get("/search-near", SearchAllController.filtroProximo);
