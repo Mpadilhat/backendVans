@@ -1,28 +1,9 @@
 const Empresa = require("../models/Empresa");
 
 module.exports = {
-  //listarEmpresas == 'index' nos controllers
-  async listarEmpresas(req, resp) {
-    const Emps = await Empresa.find();
-
-    if (Emps.length === 0) {
-      return resp.json({ message: "Não existem empresas cadastradas" });
-    } else return resp.json(Emps);
-  },
-
-  async listarPorId(req, resp) {
-    const { id } = req.params;
-    await Empresa.findOne({ _id: id }, function (err, result) {
-      if (err) {
-        resp.json({ message: "Empresa não encontrada" });
-      } else resp.json(result);
-    });
-  },
-
   //gravarBD == 'store' nos controllers
-  async gravarBD(request, response) {
-    const { user, empresa, endereco, latitude, longitude } = request.body;
-    const email = user.email;
+  async cadastrarEmpresa(req, resp) {
+    const { id, empresa, email, endereco, latitude, longitude } = req.body;
 
     //Verificar se já existe empresa cadastrada com aquele nome ou e-mail
     const empresaExiste = await Empresa.findOne({ empresa });
@@ -37,52 +18,44 @@ module.exports = {
 
       //Cadastra a empresa no Banco de Dados
       const emp = await Empresa.create({
-        user,
+        _id: id,
         empresa,
         email,
         endereco,
         localizacao,
       });
 
-      return response.json(emp);
+      return resp.json(emp);
     } else {
-      return response.json({
+      return resp.json({
         message: "Esta empresa ou e-mail já estão cadastrados",
       });
     }
   },
 
-  //logar
-  async buscarUsuario(req, resp) {
-    const { email, senha } = req.body;
+  //listarEmpresas == 'index' nos controllers
+  async listarEmpresas(req, resp) {
+    const Emps = await Empresa.find();
 
-    //Testa o email pq não vai poder repetir
-    const emailExist = await Empresa.find({
-      "user.email": email,
+    if (Emps.length === 0) {
+      return resp.json({ message: "Não existem empresas cadastradas" });
+    } else return resp.json(Emps);
+  },
+
+  async listarEmpresaPorId(req, resp) {
+    const { id } = req.params;
+    await Empresa.findOne({ _id: id }, function (err, result) {
+      if (err) {
+        resp.json({ message: "Erro ao buscar empresa" });
+      } else {
+        if (result) resp.json(result);
+        else resp.json({ message: "Empresa não encontrada" });
+      }
     });
-
-    if (emailExist.length !== 0) {
-      await Empresa.find(
-        {
-          $and: [{ "user.email": email }, { "user.senha": senha }],
-        },
-        function (err, result) {
-          if (err) {
-            return resp.json({ message: "Erro ao buscar usuário" });
-          } else {
-            if (result.length === 0)
-              return resp.json({ message: "Senha incorreta!" });
-            else return resp.json(result);
-          }
-        }
-      );
-    } else {
-      return resp.json({ message: "Este usuário não existe" });
-    }
   },
 
   //editar = 'update' nos controllers
-  async editar(req, resp) {
+  async editarEmpresa(req, resp) {
     const { id } = req.params;
     const { empresa, email, endereco, latitude, longitude } = req.body;
 
@@ -93,14 +66,28 @@ module.exports = {
       },
       function (err, result) {
         if (err) {
-          resp.json({ message: "Erro ao atualizar o usuário!" });
+          resp.json({ message: "Erro ao atualizar empresa!" });
         } else {
-          resp.json({ message: "Usuário atualizado com sucesso!" });
+          resp.json({ message: "Empresa atualizada com sucesso!" });
         }
       }
     );
   },
 
   //deletar = 'destroy' nos controllers
-  //async deletar(req, resp) {},
+  async deletarEmpresa(req, resp) {
+    const { id } = req.params;
+
+    await Empresa.deleteOne(
+      { _id: id },
+
+      function (err, result) {
+        if (err) {
+          resp.json({ message: "Erro ao deletar empresa!" });
+        } else {
+          resp.json({ message: "Empresa deletada com sucesso!" });
+        }
+      }
+    );
+  },
 };
