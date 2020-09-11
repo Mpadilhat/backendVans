@@ -55,8 +55,39 @@ module.exports = {
   },
 
   //editar = 'update' nos controllers
-  //async editar(req, resp) {}
+  async editarEmpresa(req, resp) {
+    const { id } = req.params;
+    const { empresa, email, endereco, latitude, longitude } = req.body;
+
+    await Empresa.updateOne(
+      { _id: id },
+      {
+        $set: { empresa, email, endereco, latitude, longitude },
+      },
+      function (err, result) {
+        if (err) {
+          resp.json({ message: "Erro ao atualizar empresa!" });
+        } else {
+          resp.json({ message: "Empresa atualizada com sucesso!" });
+        }
+      }
+    );
+  },
 
   //deletar = 'destroy' nos controllers
-  //async deletar(req, resp) {},
+  async deletarEmpresa(req, resp) {
+    const { id } = req.params;
+
+    await Empresa.deleteOne(
+      { _id: id },
+
+      function (err, result) {
+        if (err) {
+          resp.json({ message: "Erro ao deletar empresa!" });
+        } else {
+          resp.json({ message: "Empresa deletada com sucesso!" });
+        }
+      }
+    );
+  },
 };

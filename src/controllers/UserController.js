@@ -67,8 +67,39 @@ module.exports = {
   },
 
   //editar = 'update' nos controllers
-  //async editar(req, resp) {}
+  async editarUsuario(req, resp) {
+    const { id } = req.params;
+    const { email, senha } = req.body;
+
+    await Usuario.updateOne(
+      { _id: id },
+      {
+        $set: { email, senha },
+      },
+      function (err, result) {
+        if (err) {
+          resp.json({ message: "Erro ao atualizar usuário!" });
+        } else {
+          resp.json({ message: "Usuário atualizado com sucesso!" });
+        }
+      }
+    );
+  },
 
   //deletar = 'destroy' nos controllers
-  //async deletar(req, resp) {},
+  async deletarUsuario(req, resp) {
+    const { id } = req.params;
+
+    await Usuario.deleteOne(
+      { _id: id },
+
+      function (err, result) {
+        if (err) {
+          resp.json({ message: "Erro ao deletar usuário!" });
+        } else {
+          resp.json({ message: "Usuário deletado com sucesso!" });
+        }
+      }
+    );
+  },
 };

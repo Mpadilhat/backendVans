@@ -13,14 +13,15 @@ const routes = Router();
 routes.post("/empresas", EmpController.cadastrarEmpresa);
 routes.get("/empresas", EmpController.listarEmpresas);
 routes.get("/empresas/:id", EmpController.listarEmpresaPorId);
-
-//routes.put("/usuario/:id", EmpController.editar);
-//routes.delete("/usuario/:id", EmpController.deletar);
+routes.put("/empresas/:id", EmpController.editarEmpresa);
+routes.delete("/empresas/:id", EmpController.deletarEmpresa);
 
 routes.post("/usuarios", UserController.criarUsuario);
 routes.get("/usuarios", UserController.listarUsuarios);
 routes.get("/usuarios/:id", UserController.listarUserPorId);
 routes.post("/usuarios-login", UserController.buscarUsuario);
+routes.put("/usuarios/:id", UserController.editarUsuario);
+routes.delete("/usuarios/:id", UserController.deletarUsuario);
 
 routes.get("/search-near", SearchAllController.filtroProximo);
 routes.get("/search", SearchNameController.filtroNome);
