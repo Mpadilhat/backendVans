@@ -25,6 +25,5 @@ routes.delete("/usuarios/:id", UserController.deletarUsuario);
 
 routes.get("/search-near", SearchAllController.filtroProximo);
 routes.get("/search", SearchNameController.filtroNome);
-// routes.get("/search", SearchController.filtroPreco);
 
 module.exports = routes;
