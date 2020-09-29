@@ -3,7 +3,22 @@ const Empresa = require("../models/Empresa");
 module.exports = {
   //gravarBD == 'store' nos controllers
   async cadastrarEmpresa(req, resp) {
-    const { id, empresa, email, endereco, latitude, longitude } = req.body;
+    const {
+      id,
+      foto,
+      empresa,
+      cnpj,
+      contato,
+      redeSocial,
+      email,
+      endereco,
+      latitude,
+      longitude,
+      zonasAtuacao,
+      faixaPreco,
+      vans,
+      onibus,
+    } = req.body;
 
     //Verificar se já existe empresa cadastrada com aquele nome ou e-mail
     const empresaExiste = await Empresa.findOne({ empresa });
@@ -19,10 +34,18 @@ module.exports = {
       //Cadastra a empresa no Banco de Dados
       const emp = await Empresa.create({
         _id: id,
+        foto,
         empresa,
+        cnpj,
+        contato,
+        redeSocial,
         email,
         endereco,
         localizacao,
+        zonasAtuacao,
+        faixaPreco,
+        vans,
+        onibus,
       });
 
       return resp.json(emp);
