@@ -57,7 +57,8 @@ module.exports = {
           } else {
             if (result.length === 0)
               return resp.json({ message: "Senha incorreta!" });
-            else return resp.json(result);
+            else
+              return resp.json([{ id: result[0]._id, email: result[0].email }]);
           }
         }
       );
