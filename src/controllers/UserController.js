@@ -1,4 +1,5 @@
 const Usuario = require("../models/Usuario");
+const Empresa = require("../models/Empresa");
 
 module.exports = {
   async criarUsuario(req, resp) {
@@ -45,6 +46,7 @@ module.exports = {
 
     //Testa o email pq não vai poder repetir
     const emailExist = await Usuario.find({ email });
+    const empresa = await Empresa.findOne({ email });
 
     if (emailExist.length !== 0) {
       await Usuario.find(
@@ -57,8 +59,16 @@ module.exports = {
           } else {
             if (result.length === 0)
               return resp.json({ message: "Senha incorreta!" });
-            else
-              return resp.json([{ id: result[0]._id, email: result[0].email }]);
+            else {
+              return resp.json([
+                {
+                  id: result[0]._id,
+                  user: empresa.empresa,
+                  email: result[0].email,
+                  infos: empresa,
+                },
+              ]);
+            }
           }
         }
       );
