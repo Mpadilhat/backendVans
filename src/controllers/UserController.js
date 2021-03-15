@@ -97,6 +97,26 @@ module.exports = {
     );
   },
 
+  //editar foto
+  async editarFoto(req, resp) {
+    const { id } = req.params;
+    const { foto } = req.body;
+
+    await Usuario.updateOne(
+      { _id: id },
+      {
+        $set: { foto },
+      },
+      function (err, result) {
+        if (err) {
+          resp.json({ message: "Erro ao atualizar foto!" });
+        } else {
+          resp.json({ message: "Foto atualizada com sucesso!" });
+        }
+      }
+    );
+  },
+
   //deletar = 'destroy' nos controllers
   async deletarUsuario(req, resp) {
     const { id } = req.params;

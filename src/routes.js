@@ -21,6 +21,7 @@ routes.get("/usuarios", UserController.listarUsuarios);
 routes.get("/usuarios/:id", UserController.listarUserPorId);
 routes.post("/usuarios-login", UserController.buscarUsuario);
 routes.put("/usuarios/:id", UserController.editarUsuario);
+routes.put("/usuarios/:id/foto", UserController.editarFoto);
 routes.delete("/usuarios/:id", UserController.deletarUsuario);
 
 routes.get("/search-near", SearchAllController.filtroProximo);
