@@ -111,7 +111,7 @@ module.exports = {
         if (err) {
           resp.json({ message: "Erro ao atualizar foto!" });
         } else {
-          resp.json({ message: "Foto atualizada com sucesso!" });
+          resp.json(result);
         }
       }
     );
