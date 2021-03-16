@@ -65,6 +65,7 @@ module.exports = {
                   id: result[0]._id,
                   user: empresa.empresa,
                   email: result[0].email,
+                  foto: result[0].foto,
                   infos: empresa,
                 },
               ]);
@@ -111,7 +112,7 @@ module.exports = {
         if (err) {
           resp.json({ message: "Erro ao atualizar foto!" });
         } else {
-          resp.json(result);
+          resp.json({ message: "Foto atualizada com sucesso!" });
         }
       }
     );
