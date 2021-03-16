@@ -3,7 +3,7 @@ const Empresa = require("../models/Empresa");
 
 module.exports = {
   async criarUsuario(req, resp) {
-    const { email, senha } = req.body;
+    const { email, senha, foto } = req.body;
 
     //Verificar se já existe usuario cadastrado com aquele e-mail
     const emailExist = await Usuario.find({ email });
@@ -13,6 +13,7 @@ module.exports = {
       const user = await Usuario.create({
         email,
         senha,
+        foto,
       });
 
       return resp.json(user);
