@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const PointSchema = require("./utils/PointSchema");
 
 const SchemaEmpresa = new mongoose.Schema({
+  foto: String,
   empresa: String,
   cnpj: String,
   contato: String,

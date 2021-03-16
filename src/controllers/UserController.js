@@ -36,7 +36,13 @@ module.exports = {
     await Usuario.findOne({ _id: id }, function (err, result) {
       if (err) {
         resp.json({ message: "Usuário não encontrado" });
-      } else resp.json(result);
+      } else {
+        resp.json({
+          id: result._id,
+          email: result.email,
+          foto: result.foto,
+        });
+      }
     });
   },
 
@@ -46,7 +52,6 @@ module.exports = {
 
     //Testa o email pq não vai poder repetir
     const emailExist = await Usuario.find({ email });
-    const empresa = await Empresa.findOne({ email });
 
     if (emailExist.length !== 0) {
       await Usuario.find(
@@ -63,10 +68,8 @@ module.exports = {
               return resp.json([
                 {
                   id: result[0]._id,
-                  user: empresa.empresa,
                   email: result[0].email,
                   foto: result[0].foto,
-                  infos: empresa,
                 },
               ]);
             }
@@ -112,7 +115,19 @@ module.exports = {
         if (err) {
           resp.json({ message: "Erro ao atualizar foto!" });
         } else {
-          resp.json({ message: "Foto atualizada com sucesso!" });
+          Empresa.updateOne(
+            { _id: id },
+            {
+              $set: { foto },
+            },
+            function (err, res) {
+              if (err) {
+                resp.json({ message: "Erro ao atualizar foto da empresa!" });
+              } else {
+                resp.json(result);
+              }
+            }
+          );
         }
       }
     );
