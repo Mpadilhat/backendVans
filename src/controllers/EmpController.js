@@ -1,5 +1,4 @@
 const Empresa = require("../models/Empresa");
-const Usuario = require("../models/Usuario");
 
 module.exports = {
   //gravarBD == 'store' nos controllers
@@ -7,6 +6,7 @@ module.exports = {
     const {
       id,
       foto,
+      dataCriacao,
       empresa,
       cnpj,
       contato,
@@ -20,8 +20,6 @@ module.exports = {
       vans,
       onibus,
     } = req.body;
-
-    console.log(req.body);
 
     //Verificar se já existe empresa cadastrada com aquele nome ou e-mail
     const empresaExiste = await Empresa.findOne({ empresa });
@@ -37,6 +35,7 @@ module.exports = {
       //Cadastra a empresa no Banco de Dados
       const emp = await Empresa.create({
         _id: id,
+        dataCriacao,
         foto,
         empresa,
         cnpj,

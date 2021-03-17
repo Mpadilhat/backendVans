@@ -3,6 +3,7 @@ const PointSchema = require("./utils/PointSchema");
 
 const SchemaEmpresa = new mongoose.Schema({
   foto: String,
+  dataCriacao: Date,
   empresa: String,
   cnpj: String,
   contato: String,
