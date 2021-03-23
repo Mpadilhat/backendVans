@@ -6,7 +6,7 @@ module.exports = {
     const {
       id,
       foto,
-      dataCriacao,
+      dataFundacao,
       empresa,
       cnpj,
       contato,
@@ -35,7 +35,7 @@ module.exports = {
       //Cadastra a empresa no Banco de Dados
       const emp = await Empresa.create({
         _id: id,
-        dataCriacao,
+        dataFundacao,
         foto,
         empresa,
         cnpj,
