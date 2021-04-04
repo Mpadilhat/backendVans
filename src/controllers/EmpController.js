@@ -1,4 +1,5 @@
 const Empresa = require("../models/Empresa");
+const { findConnections, sendMessage } = require("../websocket");
 
 module.exports = {
   //gravarBD == 'store' nos controllers
@@ -49,6 +50,14 @@ module.exports = {
         vans,
         onibus,
       });
+
+      //Filtrar as conexões pela distância e que tem o nome da empresa buscada
+      const sendSocketMessageTo = findConnections(
+        { latitude, longitude },
+        empresa
+      );
+
+      sendMessage(sendSocketMessageTo, "novaEmpresa", emp);
 
       return resp.json(emp);
     } else {
@@ -133,7 +142,6 @@ module.exports = {
   async editarVeiculos(req, resp) {
     const { id } = req.params;
     const { vans, onibus } = req.body;
-    console.log(id, vans, onibus);
 
     await Empresa.updateOne(
       { _id: id },
