@@ -15,6 +15,7 @@ routes.get("/empresas", EmpController.listarEmpresas);
 routes.get("/empresas/:id", EmpController.listarEmpresaPorId);
 routes.put("/empresas/:id", EmpController.editarEmpresa);
 routes.delete("/empresas/:id", EmpController.deletarEmpresa);
+routes.put("/empresas-veiculos/:id", EmpController.editarVeiculos);
 
 routes.post("/usuarios", UserController.criarUsuario);
 routes.get("/usuarios", UserController.listarUsuarios);
@@ -23,6 +24,8 @@ routes.post("/usuarios-login", UserController.buscarUsuario);
 routes.put("/usuarios/:id", UserController.editarUsuario);
 routes.put("/usuarios/:id/foto", UserController.editarFoto);
 routes.delete("/usuarios/:id", UserController.deletarUsuario);
+routes.post("/usuarios-senha", UserController.buscarSenha);
+routes.put("/usuarios-editar-senha", UserController.editarSenha);
 
 routes.get("/search-near", SearchAllController.filtroProximo);
 routes.get("/search", SearchNameController.filtroNome);

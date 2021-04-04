@@ -150,4 +150,45 @@ module.exports = {
       }
     );
   },
+
+  //verifica senha para edição
+  async buscarSenha(req, resp) {
+    const { id, senha } = req.body;
+
+    await Usuario.find(
+      {
+        $and: [{ _id: id }, { senha }],
+      },
+      function (err, result) {
+        if (err) {
+          return resp.json({ message: "Erro ao validar senha" });
+        } else {
+          if (result.length === 0)
+            return resp.json({ message: "Senha incorreta!" });
+          else {
+            return resp.json({ message: "Senha validada" });
+          }
+        }
+      }
+    );
+  },
+
+  //editar senha
+  async editarSenha(req, resp) {
+    const { id, senha } = req.body;
+
+    await Usuario.updateOne(
+      { _id: id },
+      {
+        $set: { senha },
+      },
+      function (err, result) {
+        if (err) {
+          resp.json({ message: "Erro ao atualizar senha!" });
+        } else {
+          resp.json({ message: "Senha atualizada com sucesso!" });
+        }
+      }
+    );
+  },
 };

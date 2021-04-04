@@ -82,12 +82,25 @@ module.exports = {
   //editar = 'update' nos controllers
   async editarEmpresa(req, resp) {
     const { id } = req.params;
-    const { empresa, email, endereco, latitude, longitude } = req.body;
+    const {
+      empresa,
+      dataFundacao,
+      cnpj,
+      redeSocial,
+      email,
+      contato,
+      endereco,
+      localizacao,
+      zonasAtuacao,
+      faixaPreco,
+      vans,
+      onibus,
+    } = req.body;
 
     await Empresa.updateOne(
       { _id: id },
       {
-        $set: { empresa, email, endereco, latitude, longitude },
+        $set: req.body,
       },
       function (err, result) {
         if (err) {
@@ -111,6 +124,27 @@ module.exports = {
           resp.json({ message: "Erro ao deletar empresa!" });
         } else {
           resp.json({ message: "Empresa deletada com sucesso!" });
+        }
+      }
+    );
+  },
+
+  //editar veúclos
+  async editarVeiculos(req, resp) {
+    const { id } = req.params;
+    const { vans, onibus } = req.body;
+    console.log(id, vans, onibus);
+
+    await Empresa.updateOne(
+      { _id: id },
+      {
+        $set: { vans, onibus },
+      },
+      function (err, result) {
+        if (err) {
+          resp.json({ message: "Erro ao atualizar veículos!" });
+        } else {
+          resp.json({ message: "Veículos atualizados com sucesso!" });
         }
       }
     );
