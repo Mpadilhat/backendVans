@@ -24,7 +24,7 @@ exports.setupWebsocket = (server) => {
 exports.findConnections = (coordinates, empresa) => {
   return connections.filter((connection) => {
     return (
-      calculateDistance(coordinates, connection.coordinates) < 10 &&
+      calculateDistance(coordinates, connection.coordinates) < 5 &&
       connection.empresa === empresa
     );
   });
